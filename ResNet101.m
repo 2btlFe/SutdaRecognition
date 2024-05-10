@@ -84,30 +84,7 @@ end
 % analyzeNetwork(lgraph)
 
 %% ResNet 101 Transfer learning
-% net = resnet101;
-% 
-% analyzeNetwork(net)
-% 
-% lgraph = layerGraph(net);
-% clear net;
-% 
-% % New Learnable Layer
-% newLearnableLayer = fullyConnectedLayer(numClasses, ... 
-%     'Name', 'new_fc', ...
-%     'WeightLearnRateFactor', 10, ...
-%     'BiasLearnRateFactor', 10);
-% 
-% % Replacing the last layers with new layers
-% lgraph = replaceLayer(lgraph, 'fc1000', newLearnableLayer);
-% newsoftmaxLayer = softmaxLayer('Name', 'new_softmax');
-% lgraph = replaceLayer(lgraph, 'prob', newsoftmaxLayer);
-% newClassLayer = classificationLayer('Name', 'new_classoutput');
-% lgraph = replaceLayer(lgraph, 'ClassificationLayer_predictions', newClassLayer);
-% 
-% analyzeNetwork(lgraph)
-
-%% Exception
-net = xception;
+net = resnet101;
 
 analyzeNetwork(net)
 
@@ -121,13 +98,36 @@ newLearnableLayer = fullyConnectedLayer(numClasses, ...
     'BiasLearnRateFactor', 10);
 
 % Replacing the last layers with new layers
-lgraph = replaceLayer(lgraph, 'predictions', newLearnableLayer);
+lgraph = replaceLayer(lgraph, 'fc1000', newLearnableLayer);
 newsoftmaxLayer = softmaxLayer('Name', 'new_softmax');
-lgraph = replaceLayer(lgraph, 'predictions_softmax', newsoftmaxLayer);
+lgraph = replaceLayer(lgraph, 'prob', newsoftmaxLayer);
 newClassLayer = classificationLayer('Name', 'new_classoutput');
 lgraph = replaceLayer(lgraph, 'ClassificationLayer_predictions', newClassLayer);
 
 analyzeNetwork(lgraph)
+
+%% Exception
+% net = xception;
+% 
+% analyzeNetwork(net)
+% 
+% lgraph = layerGraph(net);
+% clear net;
+% 
+% % New Learnable Layer
+% newLearnableLayer = fullyConnectedLayer(numClasses, ... 
+%     'Name', 'new_fc', ...
+%     'WeightLearnRateFactor', 10, ...
+%     'BiasLearnRateFactor', 10);
+% 
+% % Replacing the last layers with new layers
+% lgraph = replaceLayer(lgraph, 'predictions', newLearnableLayer);
+% newsoftmaxLayer = softmaxLayer('Name', 'new_softmax');
+% lgraph = replaceLayer(lgraph, 'predictions_softmax', newsoftmaxLayer);
+% newClassLayer = classificationLayer('Name', 'new_classoutput');
+% lgraph = replaceLayer(lgraph, 'ClassificationLayer_predictions', newClassLayer);
+% 
+% analyzeNetwork(lgraph)
 
 %% Hyperparameter
 learnRates = [0.001, 0.0005, 0.0001];

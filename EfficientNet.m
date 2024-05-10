@@ -61,27 +61,27 @@ end
 % analyzeNetwork(lgraph)
 
 %% EfficientNet Transfer Learning 
-% net = efficientnetb0;
-% 
-% analyzeNetwork(net)
-% 
-% lgraph = layerGraph(net);
-% clear net;
-% 
-% % New Learnable Layer
-% newLearnableLayer = fullyConnectedLayer(numClasses, ... 
-%     'Name', 'new_fc', ...
-%     'WeightLearnRateFactor', 10, ...
-%     'BiasLearnRateFactor', 10);
-% 
-% % Replacing the last layers with new layers
-% lgraph = replaceLayer(lgraph, 'efficientnet-b0|model|head|dense|MatMul', newLearnableLayer);
-% newsoftmaxLayer = softmaxLayer('Name', 'new_softmax');
-% lgraph = replaceLayer(lgraph, 'Softmax', newsoftmaxLayer);
-% newClassLayer = classificationLayer('Name', 'new_classoutput');
-% lgraph = replaceLayer(lgraph, 'classification', newClassLayer);
-% 
-% analyzeNetwork(lgraph)
+net = efficientnetb0;
+
+analyzeNetwork(net)
+
+lgraph = layerGraph(net);
+clear net;
+
+% New Learnable Layer
+newLearnableLayer = fullyConnectedLayer(numClasses, ... 
+    'Name', 'new_fc', ...
+    'WeightLearnRateFactor', 10, ...
+    'BiasLearnRateFactor', 10);
+
+% Replacing the last layers with new layers
+lgraph = replaceLayer(lgraph, 'efficientnet-b0|model|head|dense|MatMul', newLearnableLayer);
+newsoftmaxLayer = softmaxLayer('Name', 'new_softmax');
+lgraph = replaceLayer(lgraph, 'Softmax', newsoftmaxLayer);
+newClassLayer = classificationLayer('Name', 'new_classoutput');
+lgraph = replaceLayer(lgraph, 'classification', newClassLayer);
+
+analyzeNetwork(lgraph)
 
 %% ResNet 101 Transfer learning
 % net = resnet101;
@@ -107,27 +107,27 @@ end
 % analyzeNetwork(lgraph)
 
 %% Exception
-net = xception;
-
-analyzeNetwork(net)
-
-lgraph = layerGraph(net);
-clear net;
-
-% New Learnable Layer
-newLearnableLayer = fullyConnectedLayer(numClasses, ... 
-    'Name', 'new_fc', ...
-    'WeightLearnRateFactor', 10, ...
-    'BiasLearnRateFactor', 10);
-
-% Replacing the last layers with new layers
-lgraph = replaceLayer(lgraph, 'predictions', newLearnableLayer);
-newsoftmaxLayer = softmaxLayer('Name', 'new_softmax');
-lgraph = replaceLayer(lgraph, 'predictions_softmax', newsoftmaxLayer);
-newClassLayer = classificationLayer('Name', 'new_classoutput');
-lgraph = replaceLayer(lgraph, 'ClassificationLayer_predictions', newClassLayer);
-
-analyzeNetwork(lgraph)
+% net = xception;
+% 
+% analyzeNetwork(net)
+% 
+% lgraph = layerGraph(net);
+% clear net;
+% 
+% % New Learnable Layer
+% newLearnableLayer = fullyConnectedLayer(numClasses, ... 
+%     'Name', 'new_fc', ...
+%     'WeightLearnRateFactor', 10, ...
+%     'BiasLearnRateFactor', 10);
+% 
+% % Replacing the last layers with new layers
+% lgraph = replaceLayer(lgraph, 'predictions', newLearnableLayer);
+% newsoftmaxLayer = softmaxLayer('Name', 'new_softmax');
+% lgraph = replaceLayer(lgraph, 'predictions_softmax', newsoftmaxLayer);
+% newClassLayer = classificationLayer('Name', 'new_classoutput');
+% lgraph = replaceLayer(lgraph, 'ClassificationLayer_predictions', newClassLayer);
+% 
+% analyzeNetwork(lgraph)
 
 %% Hyperparameter
 learnRates = [0.001, 0.0005, 0.0001];
