@@ -158,6 +158,11 @@ for lr = learnRates
             Accuracy = mean(valpreds == valImgs.Labels);
 
             fprintf('Testing LR=%f, BS=%d, Epochs=%d, Accuracy=%.2f\n', lr, bs, ep, Accuracy);
+            
+            save('bestModel.mat', 'bestModel', '-v7.3');
+            
+            fprintf('Best Params -> LR: %f, BatchSize: %d, Epochs: %d, Accuracy: %.2f\n', ...
+                bestParams.Rate, bestParams.BatchSize, bestParams.Epochs, bestAccuracy);
 
             if Accuracy > bestAccuracy
                 bestAccuracy = Accuracy;

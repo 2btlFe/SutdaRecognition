@@ -1,11 +1,11 @@
 %% Get training images
-sutda_ds = imageDatastore('Resource/combined_directory/', 'IncludeSubfolders', true, 'LabelSource', 'foldernames');
+sutda_ds = imageDatastore('OD_dataset_revised/', 'IncludeSubfolders', true, 'LabelSource', 'foldernames');
 [trainImgs, tempImgs] = splitEachLabel(sutda_ds, 0.6);
 [valImgs, testImgs] = splitEachLabel(tempImgs, 0.5);
 numClasses = numel(categories(sutda_ds.Labels));
 
 %% Image augmentation
-outputSize = [224, 224];
+outputSize = [299, 299];
 pixelRange = [-30 30];
 rotationRange = [-90 90];
 imageAugmenter = imageDataAugmenter( ...
@@ -131,8 +131,8 @@ analyzeNetwork(lgraph)
 
 %% Hyperparameter
 learnRates = [0.001, 0.0005, 0.0001];
-batchSizes = [32, 64, 128];
-epochs = [60, 90, 120];
+batchSizes = [16, 32];
+epochs = [20, 40, 60];
 
 
 %% Set training algorithm options
