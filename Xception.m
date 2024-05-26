@@ -162,7 +162,7 @@ for lr = learnRates
             if Accuracy > bestAccuracy
                 bestAccuracy = Accuracy;
                 bestParams.Rate = lr;
-                bestParams.BatchSize = bs;
+                bestPSutda_testarams.BatchSize = bs;
                 bestParams.Epochs = ep;
                 bestModel = trainedNet;
             end
@@ -178,27 +178,37 @@ fprintf('Best Params -> LR: %f, BatchSize: %d, Epochs: %d, Accuracy: %.2f\n', ..
 
 %% Test
 
-sutdanet = load('bestModel.mat').bestModel;
+% Load Test Folder
+testDataDir = 'test_crop'; % 테스트 데이터가 저장된 디렉토리 경로
+testImages = imageDatastore(testDataDir);
+
+% Preprocessing
+outputSize = [299, 299];
+augimdsTest =  augmentedImageDatastore(outputSize, testImages);
+
+% Load Best Model
+sutdanet = load('XceptionbestModel_5e4_16_60_98.mat').bestModel;
 
 %Use trained network to classify test images
 testpreds = classify(sutdanet, augimdsTest);
 
 % Evaluation
-Accuracy = mean(testpreds == testImgs.Labels);
-fprintf('Test Accuracy: %.2f\n', Accuracy);
+% Accuracy = mean(testpreds == testImgs.Labels);
+% fprintf('Test Accuracy: %.2f\n', Accuracy);
 
 %% Display the first N test images with their predicted labels
 figure;
 numImagesToShow = 20; % Number of images you want to display
 for i = 1:numImagesToShow
     % Read the next batch of images from augmentedImageDatastore
-    [img, info] = read(testImgs);
+    [img, info] = read(testImages);
     
     % Display the image
     subplot(4, 5, i); % Adjust the grid size based on how many images you want to display
     imshow(img);
     
-    title_pred = strcat(string(testpreds(i)), '/', string(testImgs.Labels(i)));
+    % title_pred = strcat(string(testpreds(i)), '/', string(testImgs.Labels(i)));
+    title_pred = string(testpreds(i));
     title(sprintf('Predict: %s', title_pred));
     
     fprintf("Predict: %s\n", title_pred);
